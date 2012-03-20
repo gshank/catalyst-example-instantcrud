@@ -1,0 +1,84 @@
+Revision history for Catalyst-Example-InstantCRUD
+
+0.038 Thu Mar 24 21:39:00 CET 2011
+    - using Lingua::EN::Inflect::Phrase instead of the inflect method in 
+    DBIx::Class::Schema::Loader::RelBuilder
+
+0.037 Mon Jun 21, 2010
+    - add build_form hook
+    - bugfixes for creation step of example db
+
+0.036 Fri May 8, 2010
+    - stash the form obj instead the rendered state of it
+    - specify the columns explicitly by name at ->find call in model_item
+    - extend ordering to handle columns in a related class
+    - stash order_by_column_link coderef as a closure to avoid leaks
+    - Helper::Controller produces Chained action setup
+    - CRUD with just plain Catalyst actions, no :Local
+
+0.035 Fri Oct 16 08:30:08 CEST 2009 DSN into config (planned previously - the 0.29 Catalyst model helper drops dsn silently - so I was forced to do that change now)
+
+0.034 Wed Aug  5 19:09:22 CEST 2009 Redirection after delete, prereqs added
+
+0.033 Mon Jun 29 09:29:37 CEST 2009 Some Moosyfication, no more uses 'version'
+
+0.0.32 Sun Jun 28 21:56:24 CEST 2009 HTML::FormHandler based
+
+0.0.30 Sat Feb 28 11:15:15 CET 2009 Better pager
+
+0.0.29 Thu Feb 26 21:19:55 CET 2009 UTF-8
+
+
+========================================================
+The Old Changes Log
+
+
+0.0.1  Thu Dec  8 15:29:28 2005
+       Initial release.
+
+0.0.2  initial CPAN release
+
+0.0.3  Fri Jan 20 23:45:45 CET 2006
+- simplified templates dirs
+- model_class instead of table_class
+- destroy via form (POST)
+
+0.0.4 Sat Feb  4 17:30:19 CET 2006
+- added verification of submitted form values
+
+0.0.8 Tue Mar 14 16:20:41 CET 2006
+- model based on DBIx::Class::Schema
+- added some initial support for relations between tables (author Lars Balker Rasmussen)
+- adopted for Catalyst 1.56
+
+0.0.10 Mon Apr  3 16:16:48 CEST 2006
+- fixed bug with -short (thanks Jonathan Manning)
+- added menu with all available tables
+
+0.0.12 Tue Aug 22 15:43:44 CEST 2006
+- added one to many and many to many relations
+- added some authentication/authorisation framework
+- all datatype config goes now into generated DBIC delclarations
+- added some first tests
+- other big changes 
+
+0.0.14 Wed Aug 23 17:35:35 CEST 2006
+- Generating separate templates per Controller
+
+0.0.16 Mon Sep 18 08:48:30 CEST 2006
+- Generating alternative controllers (with model_widget implemented)
+
+0.0.17 Fri Oct  6 12:54:18 CEST 2006
+- Generating interface_config.dat - config for forms used to create and update records
+- Form config removed from the generated 'DBIx::Class'es
+- Not generating alternative controllers any more
+
+0.0.18 Mon Oct 23 13:58:40 CEST 2006
+- interface_config.dat a bit shallower
+- got rid of 'column_value' function - unwinding loops in templates
+- Schema moved to application directory (name changed)
+- HTML::Widget::DBIC published separately
+
+0.0.20 Wed Sep 12 
+- upgraded to newer versions of DBIC and other libraries
+

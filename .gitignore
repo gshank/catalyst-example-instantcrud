@@ -1,0 +1,11 @@
+t/db/book.db
+inc
+blib
+pm_to_blib
+MANIFEST
+META.yml
+Makefile
+Makefile.old
+MANIFEST.bak
+Catalyst-Example-*
+.build

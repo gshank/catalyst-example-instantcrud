@@ -1,0 +1,39 @@
+Catalyst-Example-InstantCRUD version 0.0.1
+
+Create a working CRUD Catalyst example for all tables
+in a specified database with least of effort.
+
+INSTALLATION
+
+To install this module, run the following commands:
+
+    perl Makefile.PL
+    make
+    make test
+    make install
+
+
+
+DEPENDENCIES
+
+       'Test::More' => 0,
+        'version'    => 0,
+        'Catalyst'      => 0,
+        'URI::Escape'   => 0,
+        'HTML::Entities' => 0,
+        'HTML::Widget' => 0,
+        'File::Spec'    => 0,
+        'Catalyst::View::TT' => 0.21,
+        'Template::Plugin::Class' => 0,
+        'Catalyst::Model::DBIC' => 0,
+        'Catalyst::Helper::Model::DBIC' => 0,
+        'DBIx::Class::Loader' => 0,
+        'DBIx::Class::Schema::Loader' => 0.03,
+
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2005, <Zbigniew Lukasiak>
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
