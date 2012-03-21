@@ -74,9 +74,10 @@ __DATA__
 __schemaclass__
 package [% package %];
 
-use strict;
-use warnings;
-use base qw/[% schema %]::base/;
+use namespace::autoclean;
+use Moose;
+use MooseX::NonMoose;
+extends qw/[% schema %]::base/;
 # Stringifies to the first primary key.
 # Change it to what makes more sense.
 # Is that value that appears in HTML Select's and things like that.
@@ -86,15 +87,23 @@ __PACKAGE__->table('[% table %]');
 __PACKAGE__->add_columns(qw/[% FOR col = columns; col; ' '; END %]/);
 __PACKAGE__->set_primary_key(qw/[% pks %]/);
 [% relationships %]
+
+__PACKAGE__->meta->make_immutable;
+
 1;
 __baseclass__
 package [% schema %]::base;
-use strict;
-use warnings;
-use base 'DBIx::Class';
+
+use namespace::autoclean;
+use Moose;
+use MooseX::NonMoose;
+extends 'DBIx::Class';
 
 __PACKAGE__->load_components(qw/DigestColumns Core/);
 #__PACKAGE__->load_components(qw/InstantCRUD DigestColumns InflateColumn::DateTime Core/);
+
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 __schema__
@@ -102,6 +111,9 @@ package [% schema %];
 use base qw/DBIx::Class::Schema/;
 
 __PACKAGE__->load_classes(qw/[% classes %]/);
+
+__PACKAGE__->meta->make_immutable;
+
 
 1;
 __END__

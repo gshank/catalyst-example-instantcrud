@@ -1,6 +1,6 @@
 package Catalyst::Example::InstantCRUD;
 
-$VERSION = '0.038';
+$VERSION = '0.040';
 
 use warnings;
 use strict;
@@ -101,6 +101,7 @@ L<http://rt.cpan.org>.
 =head1 CONTRIBUTORS
 
 wreis: Wallace Reis <wallace@reis.org.br>
+lukast: Lukas Thiemeier <lukast@cpan.org>
 
 =head1 AUTHOR
 

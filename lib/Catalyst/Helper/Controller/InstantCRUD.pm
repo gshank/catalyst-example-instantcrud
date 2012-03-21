@@ -1,6 +1,6 @@
 package Catalyst::Helper::Controller::InstantCRUD;
 
-our $VERSION = '0.0.8';
+our $VERSION = '0.1.0';
 
 use warnings;
 use strict;
@@ -53,12 +53,13 @@ __DATA__
 =begin pod_to_ignore
 
 __compclass__
-use strict;
-use warnings;
 
 package [% class %];
+use namespace::autoclean;
+use Moose;
+BEGIN{
 [% IF rest %]
-use base "Catalyst::Example::Controller::InstantCRUD::REST";
+extends "Catalyst::Example::Controller::InstantCRUD::REST";
 __PACKAGE__->config(
     serialize => {
         default => 'text/html',
@@ -69,8 +70,9 @@ __PACKAGE__->config(
     }
 );
 [% ELSE %]
-use base "Catalyst::Example::Controller::InstantCRUD";
+extends "Catalyst::Example::Controller::InstantCRUD";
 [% END %]
+};
 
 [% form_code %]
 
@@ -80,10 +82,13 @@ __PACKAGE__->config(
         view => { Chained => 'base' },
         edit => { Chained => 'base' },
         destroy => { Chained => 'base' },
+	[% IF rest %] by_id => { Chained => 'base' }, [% END %]
     },
 );
 
 sub base : Chained('/') PathPart('[% base_pathpart %]') CaptureArgs(0) {}
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

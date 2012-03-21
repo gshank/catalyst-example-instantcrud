@@ -1,34 +1,43 @@
 package Catalyst::Helper::InstantCRUD;
-use base Catalyst::Helper;
-use Path::Class;
+#use base Catalyst::Helper;
+use Path::Class qw/dir file/;
+use File::ShareDir qw/dist_dir/;
 
-our $VERSION = '0.0.8';
+use Moose;
+extends qw/Catalyst::Helper/;
 
-use warnings;
-use strict;
+#use Path::Class;
 
-sub _mk_appclass {
-    my $self = shift;
-    my $mod  = $self->{mod};
-    $self->render_file( 'appclass', "$mod.pm" );
-}
+our $VERSION = '0.1.0';
 
-sub _mk_rootclass {
+# not needed any more (Moose)
+#use warnings;
+#use strict;
+
+override  _mk_appclass =>sub{
+	my $self = shift;
+	my $mod  = $self->{mod};
+	$self->render_file( 'appclass', "$mod.pm" );
+};
+
+override _mk_rootclass => sub{
     my $self = shift;
     $self->render_file( 'rootclass',
         file( $self->{c}, "Root.pm" ) );
-}
+};
 
-sub _mk_config {
+override _mk_config => sub{
     my $self      = shift;
     my $dir       = $self->{dir};
     my $appprefix = $self->{appprefix};
     $self->render_file( 'config',
-        file( $dir, "$appprefix.yml" ) );
-}
+        file( $dir, "$appprefix.conf" ) );
+};
 
 # No CHANGES file (already created)
-sub _mk_changes {}
+override  _mk_changes=> sub {};
+
+no Moose;
 
 1;
 __DATA__
@@ -36,19 +45,18 @@ __DATA__
 =begin pod_to_ignore
 
 __appclass__
-use strict;
-use warnings;
-
 package [% name %];
+use Moose;
+use namespace::autoclean;
 
-use Catalyst::Runtime '5.70';
+use Catalyst::Runtime '5.90';
 [% IF rest %]use Catalyst::Request::REST::ForBrowsers;[% END %]
 
 use Catalyst qw/
 	-Debug
 	ConfigLoader
 	Static::Simple
-    Unicode
+    	Unicode::Encoding
 [% IF auth -%]
 [% END -%]
 /;
@@ -99,13 +107,15 @@ it under the same terms as Perl itself.
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
+
 1;
 __rootclass__
 package [% rootname %];
 
-use strict;
-use warnings;
-use base 'Catalyst::Controller';
+use namespace::autoclean;
+use Moose;
+BEGIN{extends qw/Catalyst::Controller/ };
 
 #
 # Sets the actions in this controller to be registered with no prefix
@@ -199,35 +209,36 @@ it under the same terms as Perl itself.
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
+
 1;
 __config__
----
-name: [% name %]
-
-View::TT:
-    WRAPPER: 'wrapper.tt'
-
-InstantCRUD:
-    model_name: [% model_name %]
-    schema_name: [% schema_name %]
-    maxrows: 10
-
-Model::[% model_name %]:
-    connect_info:
-        dsn: "[% dsn %]"
-        user: [% duser %]
-        password: [% dpassword %]
-
+name [% name %]
+<View::TT>
+    WRAPPER wrapper.tt
+</View::TT>
+<InstantCRUD>
+    model_name [% model_name %]
+    schema_name [% schema_name %]
+    maxrows 10
+</InstantCRUD>
+<Model::[% model_name %]>
+    <connect_info>
+        dsn [% dsn %]
+        [% IF duser %] user [% duser %] [% END -%]
+        [% IF dpassword %] password [% dpassword %] [% END -%]
+    </connect_info>
+</Model::[% model_name %]>
 __END__
 
 =head1 NAME
 
-Catalyst::Helper::Controller::InstantCRUD - [One line description of module's purpose here]
+Catalyst::Helper::InstantCRUD - [One line description of module's purpose here]
 
 
 =head1 VERSION
 
-This document describes Catalyst::Helper::Controller::InstantCRUD version 0.0.1
+This document describes Catalyst::Helper::InstantCRUD version 0.1.0
 
 
 =head1 SYNOPSIS

@@ -1,6 +1,6 @@
 package Catalyst::Helper::View::InstantCRUD;
 
-our $VERSION = '0.08';
+our $VERSION = '0.082';
 
 use warnings;
 use strict;
@@ -128,8 +128,12 @@ __DATA__
 __compclass__
 package [% class %];
 
-use strict;
-use base 'Catalyst::View::TT';
+use namespace::autoclean;
+use Moose;
+use MooseX::NonMoose;
+BEGIN{
+extends 'Catalyst::View::TT';
+};
 
 __PACKAGE__->config( 
     TEMPLATE_EXTENSION => '.tt',
@@ -158,6 +162,8 @@ This library is free software, you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 
