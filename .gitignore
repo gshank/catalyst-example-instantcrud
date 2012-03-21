@@ -1,4 +1,7 @@
-t/db/book.db
+t/tmp/test.db
+t/tmp/DVDzbr
+t/tmp/DVDzbr_rest
+t/tmp/My-App
 inc
 blib
 pm_to_blib
